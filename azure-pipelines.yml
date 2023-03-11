@@ -28,12 +28,13 @@ stages:
              targetType: 'inline'
              script: |
                write-host "$(Build.RequestedFor)"
+               write-host "$(Build.RequestedForId)"
                write-host "$(Build.RequestedForEmail)"
                write-host "$(Build.Repository.Uri)"
 
                ${RepositoryAccessToken} = "$env:ADO_PAT_TOKEN"
 
-               ${RepositoryURL} = “https://$(Build.RequestedForEmail):${RepositoryAccessToken}@$(hostname)/$(Build.Repository.Name)”
+               ${RepositoryURL} = “https://$(Build.RequestedForId):${RepositoryAccessToken}@$(hostname)/$(Build.Repository.Name)”
                ${ExitStatus} = git ls-remote --exit-code --heads ${RepositoryURL} $(Sales_Sol_Export_Branch_Name)
                if(${ExitStatus}.Length -gt 0)
                {
