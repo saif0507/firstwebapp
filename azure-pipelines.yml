@@ -32,13 +32,18 @@ stages:
                write-host "$(Build.RequestedForEmail)"
                write-host "$(Build.Repository.Uri)"
 
-               ${RepositoryAccessToken1} = "$env:ADO_PAT_TOKEN"
+               ${RepositoryAccessToken} = "$env:ADO_PAT_TOKEN"
 
                ${RepositoryURL} = “https://$(Build.RequestedForId):${RepositoryAccessToken}@$(hostname)/$(Build.Repository.Name)”
                ${ExitStatus} = git ls-remote --exit-code --heads ${RepositoryURL} $(Sales_Sol_Export_Branch_Name)
                if(${ExitStatus}.Length -gt 0)
                {
                  Write-host “Branch Exist”
+                 Write-host "Cloning Branch: $(Sales_Sol_Export_Branch_Name) to workspace"
+                 git clone -b $(Sales_Sol_Export_Branch_Name) ${RepositoryURL} $(Build.SourcesDirectory)
+                 git config --global --add safe.directory $(Build.SourcesDirectory)
+                 git branch -a
+                 write-host "Done"
                  }
            env:
              ADO_PAT_TOKEN: $(System.AccessToken)
