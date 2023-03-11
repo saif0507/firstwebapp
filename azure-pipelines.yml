@@ -5,6 +5,9 @@
 
 trigger: none
 
+variables:
+ - group: 'Test-Variables'
+
 stages:
  - stage: Export
    displayName: 'Export'
@@ -27,3 +30,14 @@ stages:
                write-host "$(Build.RequestedFor)"
                write-host "$(Build.RequestedForEmail)"
                write-host "$(Build.Repository.Uri)"
+
+               ${RepositoryAccessToken} = "$env:ADO_PAT_TOKEN"
+
+               ${RepositoryURL} = “https://$(Build.RequestedForEmail):${RepositoryAccessToken}@$(hostname)/$(Build.Repository.Name)”
+               ${ExitStatus} = git ls-remote --exit-code --heads ${RepositoryURL} $(Sales_Sol_Export_Branch_Name)
+               if(${ExitStatus}.Length -gt 0)
+               {
+                 Write-host “Branch Exist”
+                 }
+           env:
+             ADO_PAT_TOKEN: $(System.AccessToken)
