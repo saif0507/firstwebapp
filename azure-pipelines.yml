@@ -13,7 +13,7 @@ stages:
      - job: Export
        displayName: 'Export Solution'
        pool:
-        name: 'Azure Pipeline'
+        name: 'Azure Pipelines'
         vmImage: 'windows-latest'
        steps:
          - checkout: none
