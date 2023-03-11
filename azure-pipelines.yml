@@ -51,8 +51,7 @@ stages:
 
          - task: GitClone@2
            inputs:
-             RepositoryURL: 'https://github.com'
-             RepositoryPath: '/saif0507/firstwebapp.git'
+             RepositoryURL: 'https://github.com/saif0507/firstwebapp.git'
              Branch: 'Export/Sales/Solutions'
              FallbackBranch: 'Export/Sales/Solutions'
              BaseBranch: 'master'
