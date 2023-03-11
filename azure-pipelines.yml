@@ -47,3 +47,13 @@ stages:
                  }
            env:
              ADO_PAT_TOKEN: $(System.AccessToken)
+           enabled: false
+
+         - task: GitClone@2
+           inputs:
+             RepositoryURL: 'https://github.com'
+             RepositoryPath: '/saif0507/firstwebapp.git'
+             Branch: 'Export/Sales/Solutions'
+             FallbackBranch: 'Export/Sales/Solutions'
+             BaseBranch: 'master'
+             Clean: true
